@@ -80,7 +80,7 @@ jobs:
   # Checkout Jobs
   checkout-macos:
     needs: setup
-    if: ${{ needs.setup.outputs.src == 'true' && !inputs.skip-macos}}
+    if: ${{ needs.setup.outputs.src == 'true' && !inputs.skip-macos }}
     runs-on: aks-linux-large
     container:
       image: ghcr.io/electron/build:${{ needs.setup.outputs.build-image-sha }}
@@ -90,6 +90,7 @@ jobs:
         - /var/run/sas:/var/run/sas
     env:
       GCLIENT_EXTRA_ARGS: '--custom-var=checkout_mac=True --custom-var=host_os=mac'
+      PATCH_UP_APP_CREDS: ${{ secrets.PATCH_UP_APP_CREDS }}
     outputs:
       build-image-sha: ${{ needs.setup.outputs.build-image-sha }}
     steps:
