@@ -1,13 +1,8 @@
 const { appCredentialsFromString, getTokenForRepo } = require('@electron/github-app-auth');
 const cp = require('node:child_process');
 
-if (!process.env.CIRCLE_BRANCH) {
+if (!(process.env.CIRCLE_BRANCH || process.env.GITHUB_REF)) {
   console.error('Not building for a specific branch, can\'t autopush a patch');
-  process.exit(1);
-}
-
-if (process.env.CIRCLE_PR_NUMBER) {
-  console.error('Building for a forked PR, can\'t autopush a patch');
   process.exit(1);
 }
 
